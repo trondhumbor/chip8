@@ -10,6 +10,6 @@ Thanks to:
 * [Jackson Sommerich' blogpost](https://jackson-s.me/2019/07/13/Chip-8-Instruction-Scheduling-and-Frequency.html) for accurate instruction timings
 
 Known issues/future work:
-* While most games work fine, there's some that needs to be looked into
+* While most games work fine, there's some that aren't fully compatible yet
 * Audio support
-* The keypad occasionally won't play ball on Linux, possibly a pixel/opengl issue.
+* The keypad occasionally won't play nice on Linux, possibly a pixel/opengl issue
