@@ -10,7 +10,7 @@ import (
 )
 
 type Emulator struct {
-	c *hardware.Cpu
+	cpu *hardware.Cpu
 }
 
 func NewEmulator(romPath string) {
@@ -24,18 +24,18 @@ func NewEmulator(romPath string) {
 
 	rom := make([]byte, fi.Size())
 	binary.Read(f, binary.BigEndian, &rom)
-	screenBuffer := make(chan hardware.Screenbuffer)
+	screenChan := make(chan hardware.Screenbuffer)
 	keyboardChan := make(chan byte)
 
-	emulator := &Emulator{
-		hardware.NewCPU(cfg, screenBuffer, keyboardChan),
+	emulator := Emulator{
+		hardware.NewCPU(cfg, screenChan, keyboardChan),
 	}
 
-	emulator.c.LoadROM(rom)
-	emulator.c.StartTimer()
-	go emulator.c.FE()
+	emulator.cpu.LoadROM(rom)
+	emulator.cpu.StartTimer()
+	go emulator.cpu.FE()
 
 	pixelgl.Run(func() {
-		hardware.NewScreen(cfg, screenBuffer, keyboardChan)
+		hardware.NewScreen(cfg, screenChan, keyboardChan)
 	})
 }
