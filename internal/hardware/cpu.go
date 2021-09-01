@@ -17,7 +17,7 @@ type Cpu struct {
 	dt           timer
 	st           timer
 	pc           uint16
-	sp           uint8
+	sp           int8
 	stack        []uint16
 	screenBuffer Screenbuffer
 	screenChan   chan<- Screenbuffer
@@ -56,7 +56,7 @@ func NewCPU(cfg config.Config, screenChan chan<- Screenbuffer, keyboardChan <-ch
 		timer{},
 		timer{},
 		0x200,
-		0,
+		-1,
 		make([]uint16, 16),
 		*NewScreenbuffer(cfg.ScreenSizeX, cfg.ScreenSizeY),
 		screenChan,
@@ -313,8 +313,9 @@ func (c *Cpu) opBnnn(inst uint16) time.Duration {
 func (c *Cpu) opCxkk(inst uint16) time.Duration {
 	// RND Vx, byte
 	vx := (inst >> 8) & 0x0F
+	kk := inst & 0xFF
 	rand.Seed(time.Now().UnixNano())
-	c.v[vx] = byte(rand.Intn(256))
+	c.v[vx] = byte(rand.Intn(256)) & byte(kk)
 
 	return time.Duration(164) * time.Microsecond
 }
