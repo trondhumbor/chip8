@@ -1,5 +1,7 @@
 # CHIP8 emulator in Go
 
+![CHIP8 screenshot](/screenshots/chip8.png?raw=true "CHIP8 screenshot")
+
 This is a fairly basic CHIP8 emulator in Go, with the rendering handled by the [pixel/pixelgl](https://github.com/faiface/pixel/) library.
 
 ```usage: chip8 romfile```
