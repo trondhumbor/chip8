@@ -290,7 +290,7 @@ func (c *Cpu) op9xy0(inst uint16) time.Duration {
 	vx := (inst >> 8) & 0x0F
 	vy := (inst >> 4) & 0x00F
 	if c.v[vx] != c.v[vy] {
-		c.pc -= 4
+		c.pc += 2
 	}
 
 	return time.Duration(73) * time.Microsecond
