@@ -114,7 +114,10 @@ func (c *Cpu) LoadROM(rom []byte) {
 }
 
 func (c *Cpu) op00E0(inst uint16) time.Duration {
+	// CLS
 	c.screenBuffer = *NewScreenbuffer(c.cfg.ScreenSizeX, c.cfg.ScreenSizeX)
+	toBeSent := c.screenBuffer
+	c.screenChan <- toBeSent
 
 	return time.Duration(109) * time.Microsecond
 }
